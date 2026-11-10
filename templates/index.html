@@ -7,14 +7,28 @@
 </head>
 <body>
 	<h1>Awesome Habit Tracker</h1>
-	<ul>
-		{% for task in tasks %}
-			<li>
-				<input type="checkbox" id="{{ loop.index }}" name="taskCheckbox" value="{{ loop.index }}">
-				<label for="{{ loop.index }}">{{ task }}</label>
-			</li>
-		{% endfor %}
-	</ul>
+		<ul>
+			{% for task in tasks %}
+				<li>
+					<form method="POST" action="{{ url_for('complete_tasks') }}">
+						<input type="checkbox" id="{{ loop.index }}" name="taskCheckbox" value="{{ loop.index }}" onclick="this.form.submit()">
+						
+						<label for="{{ loop.index }}">{{ task }}</label>
+					</form>
+					
+					<form method="POST" action="{{ url_for('delete_tasks') }}">
+						<input type="hidden" name="taskCheckbox" value="{{ loop.index }}">
+						<button type="submit">Delete</button>
+					</form>
+				</li>
+			{% endfor %}
+		</ul>
+		<script>
+			function deleteTask(index) {
+				document.getElementById(index).checked = false;
+				document.forms[0].submit();
+			}
+		</script>
 	<form method="POST" action="{{ url_for('add_task') }}">
 		<label for="newTask">Add Task:</label>
 		<input type="text" id="newTask" name="newTask" required>
