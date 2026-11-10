@@ -4,35 +4,82 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Habit Tracker</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-	<h1>Awesome Habit Tracker</h1>
-		<ul>
-			{% for task in tasks %}
-				<li>
-					<form method="POST" action="{{ url_for('complete_tasks') }}">
-						<input type="checkbox" id="{{ loop.index }}" name="taskCheckbox" value="{{ loop.index }}" onclick="this.form.submit()">
+
+
+<div class="header">
+	<a href="/?page=default" class="logo" onclick="openPage('default', this)">Habit Tracker</a>
+	<div class="header-right">
+		<a class="tablink" href="/?page=Home" onclick="openPage('Home', this)">Home</a>
+		<a class="tablink" href="/?page=Login" onclick="openPage('Login', this)">Login</a>
+	</div>
+</div>
+
+<div id="default" class="tabcontent">
+	<p> ?????? </p>
+</div>
+
+<div id="Login" class="tabcontent">
+	<p> Login </p>
+</div>
+
+<script>
+	function openPage(name, elmnt) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+
+		tablinks = document.getElementsByClassName("tablink");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].style.backgroundColor = "";
+		}
+		
+		document.getElementById(name).style.display = "block";
+	}
+	
+	window.onload = function() {
+		const params = new URLSearchParams(window.location.search);
+		const page = params.get('page') || 'default';
+		openPage(page, null);
+	};
+
+	
+</script>
+
+<div id="Home" class="tabcontent">
+	<body>
+			<ul>
+				{% for task in tasks %}
+					<li>
+						<form method="POST" action="{{ url_for('complete_tasks') }}">
+							<input type="checkbox" id="{{ loop.index }}" name="taskCheckbox" value="{{ loop.index }}" onclick="this.form.submit()">
 						
-						<label for="{{ loop.index }}">{{ task }}</label>
-					</form>
+							<label for="{{ loop.index }}">{{ task }}</label>
+						</form>
 					
-					<form method="POST" action="{{ url_for('delete_tasks') }}">
-						<input type="hidden" name="taskCheckbox" value="{{ loop.index }}">
-						<button type="submit">Delete</button>
-					</form>
-				</li>
-			{% endfor %}
-		</ul>
-		<script>
-			function deleteTask(index) {
-				document.getElementById(index).checked = false;
-				document.forms[0].submit();
-			}
-		</script>
-	<form method="POST" action="{{ url_for('add_task') }}">
-		<label for="newTask">Add Task:</label>
-		<input type="text" id="newTask" name="newTask" required>
-		<button type="submit">Add</button>
-	</form>
-</body>
+						<form method="POST" action="{{ url_for('delete_tasks') }}">
+							<input type="hidden" name="taskCheckbox" value="{{ loop.index }}">
+							<button type="submit">Delete</button>
+						</form>
+					</li>
+				{% endfor %}
+			</ul>
+			<script>
+				function deleteTask(index) {
+					document.getElementById(index).checked = false;
+					document.forms[0].submit();
+				}
+			</script>
+		<form method="POST" action="{{ url_for('add_task') }}">
+			<label for="newTask">Add Task:</label>
+			<input type="text" id="newTask" name="newTask" required>
+			<button type="submit">Add</button>
+		</form>
+	</body>
+</div>
+
+
 </html>

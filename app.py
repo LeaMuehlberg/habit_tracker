@@ -6,23 +6,25 @@ tasks = ['Shower', 'Eat', 'Study']
 
 @app.route('/')
 def index():
-	return render_template('index.html', tasks=tasks)
+	page = request.args.get('page', 'default')
+	return render_template('index.html', tasks=tasks, page=page)
 
 @app.route('/add', methods=['POST'])
 def add_task():
 	new_task = request.form.get('newTask')
 	if new_task:
 		tasks.append(new_task)
-	return redirect(url_for('index'))
+	return redirect(url_for('index', page='Home'))
 
 @app.route('/complete', methods=['POST'])
 def complete_tasks():
+	page = request.args.get('page', 'default')
 	completed_tasks = request.form.getlist('taskCheckbox')
 	for index in map(int, completed_tasks):
 		if 1 <= index <= len(tasks):
 			if 'Completed' not in tasks[index - 1]:
 				tasks[index - 1] += " - Completed"
-	return redirect(url_for('index'))
+	return redirect(url_for('index', page='Home'))
 
 @app.route('/delete', methods=['POST'])
 def delete_tasks():
@@ -31,7 +33,7 @@ def delete_tasks():
 	for index in map(int, tasks_to_delete):
 		if 1 <= index <= len(tasks):
 			del tasks[index - 1]
-	return redirect(url_for('index'))
+	return redirect(url_for('index', page='Home'))
 
 if __name__ == '__main__':
 	app.run(debug=True)
