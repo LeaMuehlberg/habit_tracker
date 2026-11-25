@@ -37,7 +37,6 @@ body {
 	font-family: 'Arial', sans-serif;
 	margin: 20px;
 	background-color: #f4f6f9;
-	display: flex;
 	align-items: center;
 	justify-content: center;
 }
@@ -90,7 +89,7 @@ button {
 
 .calendar-weekdays, .calendar-dates {
 	display:grid;
-	grid-template-colums: repeat(7, 1fr);
+	grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar-weekdays div, .calendar-dates div {
@@ -99,7 +98,7 @@ button {
 }
 
 .calendar-weekdays {
-	backgound-color: #eaeef3;
+	background-color: #eaeef3;
 }
 
 .calendar-weekdays div {
