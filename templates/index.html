@@ -19,6 +19,78 @@
 	</div>
 
 	<div id="default" class="tabcontent">
+		<button id="openHabitModal" class="new-habit-btn">New +</button>
+
+		<div class="modal-overlay" id="habitModal">
+			<div class="modal-box">
+
+				<div class="modal-header">
+					<h2>Create new Habit</h2>
+					<button class="close-btn" id="closeHabitModal">&times</button>
+				</div>
+
+				<form id="habitForm">
+					<div class="form-group">
+						<label for="habitName">Habit Name</label>
+						<input
+							type="text"
+							id="habitName"
+							name="habit_name"
+							placeholder="Enter habit name..."
+							required
+						>
+					</div>
+
+					<div class="form-group">
+						<label>Repeat</label>
+						<div class="recurrence-options">
+
+							<label class="option">
+								<input type="radio" name="recurrence" value="daily">
+								<span>Daily</span>
+							</label>
+
+							<label class="option">
+								<input type="radio" name="recurrence" value="weekly">
+								<span>Weekly</span>
+							</label>
+
+							<label class="option">
+								<input type="radio" name="recurrence" value="monthly">
+								<span>Monthly</span>
+							</label>
+
+							<label class="option">
+								<input type="radio" name="recurrence" value="specific_days">
+								<span>Specific Days</span>
+							</label>
+
+							<label class="option">
+								<input type="radio" name="recurrence" value="interval">
+								<span>Specific Interval</span>
+							</label>
+						</div>
+					</div>
+
+					<div id="recurrenceSettings"></div>
+
+					<div class="modal-actions">
+						<button type="button" class="cancel-btn" id="cancelHabit"> Cancel </button>
+						<button type="submit" class="save-btn"> Create Habit </button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
 		<div class="calendar">
 			<div class="calendar-header">
 				<button id="prev-month"><</button>
@@ -39,7 +111,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="calendar_script.js"></script>
+		<script src="static/calendar_script.js"></script>
 	</div>
 
 	<div id="Login" class="tabcontent">
@@ -110,6 +182,6 @@
 	</script>
 
 
-
+<script src="{{ url_for('static', filename='new_habit_script.js') }}"></script>
 </body>
 </html>

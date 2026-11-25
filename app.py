@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 app = Flask(__name__)
 
@@ -34,6 +34,23 @@ def delete_tasks():
 		if 1 <= index <= len(tasks):
 			del tasks[index - 1]
 	return redirect(url_for('index', page='Home'))
+
+@app.route("/create_habit", methods=["POST"])
+def create_habit():
+	data = request.get_json()
+
+	habit = {
+		"name": data.get("habit_name"),
+		"recurrence": data.get("recurrence"),
+		"settings": data.get("settings", {})
+	}
+
+	print("New Habit:", habit)
+
+	return jsonify({
+	"success": True,
+	"message": "Habit created successfully"
+	})
 
 if __name__ == '__main__':
 	app.run(debug=True)
